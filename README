@@ -20,7 +20,7 @@ https://github.com/macvim-dev/macvim/releases (MacVim.dmg)
 
 Clone this repository to  home directory:
 cd ~
-git clone https://github.com/akioito/dotfiles.git
+git clone https://github.com/tikeda411/dotfiles.git
 ./dotfiles/install.sh
 
 mvim # enter space # install plugin dialog -> yes, wait until end plugin installation -> :quit
