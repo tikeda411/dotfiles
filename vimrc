@@ -60,12 +60,7 @@ NeoBundle 'osyo-manga/vim-watchdogs' , {
   \	"type" : "watchdogs_checker/csslint",
   \	"cmdopt" : "--ignore=order-alphabetical,box-sizing,unqualified-attributes,fallback-colors,compatible-vendor-prefixes,adjoining-classes"
   \}  
-  " ESC to not append 'g' when save in insert mode
-autocmd BufWritePost *.py  call feedkeys("\<Esc>") | WatchdogsRun
-autocmd BufWritePost *.css call feedkeys("\<Esc>") | WatchdogsRun
-autocmd BufWritePost *.js  call feedkeys("\<Esc>") | WatchdogsRun
 
-autocmd BufWritePost .vimrc,vimrc so $MYVIMRC " No more restart MacVim after editing vimrc
 
 NeoBundle 'dag/vim-fish'
 NeoBundle 'chrisbra/vim-diff-enhanced'
@@ -90,6 +85,11 @@ NeoBundle 'tpope/vim-surround' "{
   " ysiw ･･･ y(yank)s(surrond)iw(inner word)
   " gvS' ･･･ visual surroud with char
 "}
+" NeoBundleLazy 'kana/vim-smartinput', { 'autoload' : {'insert' : '1'} }
+NeoBundle 'jiangmiao/auto-pairs' "{
+  " <M-e> Fast Wrap (|)'hello' -> ('hello')
+  " <M-n> Jump to next closed pair
+"}
 NeoBundle 'tomtom/tcomment_vim' "{
  noremap  <D-1> <ESC>:TComment
  vnoremap <D-1> <ESC>gv:TComment<cr>
@@ -103,10 +103,8 @@ NeoBundle 'akioito/vim-project-files'
 " NeoBundle 'akioito/vim-myshell'
 NeoBundle 'walm/jshint.vim'
 NeoBundle 'mkitt/browser-refresh.vim'
-NeoBundleLazy 'kana/vim-smartinput', { 'autoload' : {'insert' : '1'} }
 NeoBundle 'vim-scripts/a.vim'
 NeoBundle 'vim-scripts/python_match.vim'
-" NeoBundle 'mgedmin/pythonhelper.vim'
 NeoBundle 'vim-scripts/grep.vim' "{
 if has('mac')
   " see https://github.com/BurntSushi/ripgrep
@@ -141,30 +139,44 @@ NeoBundle 'junegunn/vim-easy-align' "{
   " endif
 "}
 " NeoBundle 'tshirtman/vim-cython'
-NeoBundle 'yegappan/mru'
+" NeoBundle 'yegappan/mru'
 
 NeoBundleLazy 'ap/vim-css-color', {'autoload':{'filetypes':['css','scss','sass','less','styl']}}
 NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript']}}
 " NeoBundle 'jonsmithers/experimental-lit-html-vim'
 
-autocmd FileType rust          hi rustCommentLineDoc    guifg=#00b418 "Green variant
 
-NeoBundle 'Shougo/deoplete.nvim' "{
-  " slow startup, https://github.com/Shougo/deoplete.nvim/issues/780
-  " let g:deoplete#enable_at_startup = 1 
-  autocmd CursorHold * call deoplete#enable()
-  let g:python3_host_prog = '/usr/local/bin/python3'
-  augroup omnifuncs
+
+" NeoBundle 'Shougo/deoplete.nvim' "{
+"   " slow startup, https://github.com/Shougo/deoplete.nvim/issues/780
+"   " let g:deoplete#enable_at_startup = 1 
+"   let g:python3_host_prog = '/usr/local/bin/python3'
+"   augroup omnifuncs
+"     autocmd!
+"     autocmd CursorHold * call deoplete#enable() 
+"     autocmd FileType css            setlocal omnifunc=csscomplete#CompleteCSS
+"     autocmd FileType html,markdown  setlocal omnifunc=htmlcomplete#CompleteTags
+"     autocmd FileType javascript     setlocal omnifunc=javascriptcomplete#CompleteJS
+"     autocmd FileType python         setlocal omnifunc=pythoncomplete#Complete
+"     autocmd FileType xml            setlocal omnifunc=xmlcomplete#CompleteTags
+"
+"     autocmd FileType rust          hi rustCommentLineDoc    guifg=#00b418 "Green variant
+"   augroup END
+" "}
+
+NeoBundle 'Valloric/YouCompleteMe', {
+    \ 'build' : {
+    \     'mac':     'python3 install.py',
+    \   },
+    \ }               
+  let g:ycm_log_level = 'error'
+  let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
+  augroup xyoucompleteme
     autocmd!
-    autocmd FileType css            setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown  setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript     setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python         setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml            setlocal omnifunc=xmlcomplete#CompleteTags
-  augroup end  
-"}
-                                     
-                                     
+    autocmd InsertLeave * if pumvisible() == 0 | pclose | endif 
+  augroup END 
+  
+NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'roxma/nvim-yarp'
 NeoBundle 'roxma/vim-hug-neovim-rpc'
 
@@ -185,17 +197,17 @@ NeoBundleLazy 'tacroe/unite-mark', {'autoload':{'unite_sources':'mark'}} "{
   nnoremap uf           :Unite -auto-resize buffer<CR>    
   nnoremap jf           :Unite buffer<CR>
   nnoremap fj           :Unite buffer<CR>
-  nnoremap <C-l>        :Unite buffer<cr>
+  " nnoremap <C-L>        :Unite buffer<cr>
   nnoremap um           :Unite mark<CR>
   nnoremap us           :Unite source<CR>
-  nnoremap ct           :MRU prj<CR>
+  " nnoremap ct           :MRU prj<CR>
   " nnoremap <C-p>        :MRU prj<CR>
   " nnoremap <C-Space>    :Unite line -input=def\ <CR>
   nnoremap unu          :Unite neobundle/update
   nnoremap mm          :Unite output:map<CR>
   
   " Custom mappings for the unite buffer
-  autocmd FileType unite call s:unite_settings()
+  
   function! s:unite_settings()
     nunmap <silent><buffer> <Space>
     " Enable navigation with control-j and control-k in insert mode
@@ -220,11 +232,11 @@ NeoBundleLazy 'tacroe/unite-mark', {'autoload':{'unite_sources':'mark'}} "{
   let g:unite_source_menu_menus.mycmds.command_candidates = [
     \['LeaderF            Shortcut/Command',  ''],
     \['  lfFunction       <Space>f / <C-Space> / <C-R>', 'exe "Leaderfx! --left function"'],
-    \['  lfProjects       <Space>p',          'exe "Unite file_mru -input=prj\\ "'],
-    \['  lfBuffers        <Space>b',          'exe "Leaderfx buffer"'], 
+    \['  lfProjects       <Space>p / <F5>',   'exe "Unite file_mru -input=prj\\ "'],
+    \['  lfBuffers        <Space>b / <C-L>',  'exe "Leaderfx buffer"'], 
     \['  lfLeaderf        <Space>l',          'exe "Leaderfx self"'],
     \['Direct Command           ',            ''],
-    \['  Project Open     :PyOpenProject',    'exe "PyOpenProject"'],
+    \['  Project Open     op',                 'exe "PyOpenProject"'],
     \['  vimrc            :e ~/.vimrc',       'exe "e ~/.vimrc"'],
     \['Legacy                    ',           ''],
     \['  python def            ',             'exe "Unite line -input=def\\ "'],
@@ -240,7 +252,8 @@ NeoBundleLazy 'tacroe/unite-mark', {'autoload':{'unite_sources':'mark'}} "{
     \['  jump             :Unite jump',       'exe "Unite jump"'],
     \['  change           :Unite change',     'exe "Unite change"'], 
     \]
-  nnoremap <C-p>  :Unite -silent -start-insert menu:mycmds<CR>
+  nnoremap <C-p>    :Unite -silent -start-insert menu:mycmds<CR>
+  noremap op        :PyOpenProject<CR> 
 "}   
 
 NeoBundle 'Shougo/neomru.vim' "{
@@ -261,20 +274,20 @@ NeoBundle 'Yggdroot/LeaderF' "{ https://github.com/Yggdroot/LeaderF
   nnoremap <space>f  :<C-u>Leaderfx! --left function<cr>
   nnoremap <C-Space> :<C-u>Leaderfx! --left function<cr> 
   inoremap <C-Space> <ESC>:<C-u>Leaderfx! --left function<cr>
-  nnoremap <C-R>     :<C-u>Leaderfx! --left function<cr> 
+  nnoremap <C-R>     :<C-u>Leaderfx! --right function<cr> 
   inoremap <C-R>     <ESC>:<C-u>Leaderfx! --left function<cr>
+  nnoremap <C-L>     :<C-u>Leaderfx buffer<cr> 
   nnoremap <space>b  :<C-u>Leaderfx buffer<cr>
   nnoremap <space>p  :<C-u>Unite file_mru -input=prj<cr><Space>
+  nnoremap <F5>      :<C-u>Unite file_mru -input=prj<cr><Space>
   nnoremap <space>l  :<C-u>Leaderfx self<cr> 
 
   command! -nargs=* -bang -complete=customlist,leaderf#Any#parseArguments Leaderfx call leaderf#Any#start(<bang>0, <q-args>)
-    \ | execute 'call feedkeys("\<Tab>")'
+    \  | set nowrap | vertical resize 45 | call feedkeys("<Tab>")
 "}
 
 NeoBundle 'godlygeek/csapprox'
 NeoBundle 'sensible.vim'                                      
-NeoBundle 'adamatom/python-syntax'
-  " let python_highlight_all = 1
 
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
@@ -336,8 +349,19 @@ endfunction
 
 let g:syntax = '???'
 let g:currentTag = '???'
-autocmd CursorHold * let g:syntax = SyntaxItem()
-autocmd CursorHold * let g:currentTag = tagbar#currenttag('%s','','s')
+
+augroup my_autocmd_misc
+  autocmd! 
+  autocmd CursorHold * let g:syntax = SyntaxItem()
+  autocmd CursorHold * let g:currentTag = tagbar#currenttag('%s','','s')
+  " Go to last file if invoked without arguments.
+  autocmd VimEnter * nested if
+    \ argc() == 0 &&
+    \ bufname("%") == "" &&
+    \ bufname("2" + 0) != "" |
+    \   exe "normal! `0" |
+    \ endif   
+augroup end
 
 " set statusline=%4*\ %l\/%L\ -\ %P,\ column\ %c\
 set statusline=%L\ column\ %c
@@ -349,14 +373,6 @@ set statusline+=%5*\ %=%{&ff}\                     " file format
 set statusline+=%4*\ %{(&fenc==\"\"?&enc:&fenc)}\  " encoding
 set statusline+=%5*%y%*                            " file type
 " set statusline+=%5*\ %{Uptime(2)}
-
-" Go to last file if invoked without arguments.
-autocmd VimEnter * nested if
-  \ argc() == 0 &&
-  \ bufname("%") == "" &&
-  \ bufname("2" + 0) != "" |
-  \   exe "normal! `0" |
-  \ endif
 
 " ----------------------------------------------------------------------------
 " Abbrevs
@@ -473,8 +489,7 @@ augroup filetype_mysql
   autocmd FileType mysql nnoremap <buffer><silent> <C-r>       :MySQL<CR>
 augroup END
 
-noremap <F5>       :QFGrep <C-R><C-W><CR>
-nmap    <F7>       :call HexHighlight()<Return>
+" nmap    <F7>       :call HexHighlight()<Return>
 
 inoremap <silent> <F12> <ESC>:GrepBuffer <C-R>=expand("<cword>")<CR><CR>
 nnoremap <silent> <F12>      :GrepBuffer <C-R>=expand("<cword>")<CR><CR>h
@@ -485,33 +500,44 @@ map <S-w> <M-Left>
 " Directory & autocmd
 set directory=~/tmp/
 set backupdir=~/tmp
-autocmd BufEnter * lcd %:p:h " Current Directory
-" autocmd BufEnter *.pyprj let g:currProject = expand('%:p') " see pyproject.vim
- 
-" autocmd BufEnter *.py  :match defLine /def\ .*$/
-" autocmd BufEnter *.js  :match defLine /.*function.*$/ 
-" autocmd BufEnter * :syntax sync fromstart
-autocmd BufNewFile,BufRead *.l set filetype=picolisp
-autocmd BufNewFile,BufRead *.arc set filetype=arc
-autocmd BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
-autocmd BufNewFile,BufRead *.dyon set filetype=rust
-autocmd BufRead * let g:currentTag = tagbar#currenttag('%s','','s')
+augroup my_autocmd
+    autocmd! 
+    autocmd BufEnter * lcd %:p:h " Current Directory
+    " autocmd BufEnter *.pyprj let g:currProject = expand('%:p') " see pyproject.vim
+    
+    " autocmd BufEnter *.py  :match defLine /def\ .*$/
+    " autocmd BufEnter *.js  :match defLine /.*function.*$/ 
+    " autocmd BufEnter * :syntax sync fromstart
+    autocmd BufNewFile,BufRead *.l set filetype=picolisp
+    autocmd BufNewFile,BufRead *.arc set filetype=arc
+    autocmd BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
+    autocmd BufNewFile,BufRead *.dyon set filetype=rust
+    autocmd BufRead * let g:currentTag = tagbar#currenttag('%s','','s')
 
-" Problem with Japanese IME / 例: 中 (tyuu) 
-autocmd VimEnter * set imdisable
-                
-autocmd FileType html setlocal indentkeys-=*<Return>
+    " Problem with Japanese IME / 例: 中 (tyuu) 
+    autocmd VimEnter * set imdisable
+                    
+    autocmd FileType html setlocal indentkeys-=*<Return>
 
-" Trim Trailing Whitespace
-autocmd BufWritePre *.{py,js,html,css} %s/\s\+$//e
+    " Trim Trailing Whitespace
+    autocmd BufWritePre *.{py,js,html,css} %s/\s\+$//e
 
-" FocusLost save and Normal Mode
-autocmd FocusLost * silent! wa
-autocmd FocusLost * if mode()[0] =~ 'i\|R' | call feedkeys("\<Esc>") | endif
+    " FocusLost save and Normal Mode
+    autocmd FocusLost * silent! wa
+    autocmd FocusLost * if mode()[0] =~ 'i\|R' | call feedkeys("\<Esc>") | endif
 
-" Fast Cursor / nocursorline in Insert Mode
-" autocmd CursorHold * setlocal cursorline
-" autocmd CursorMoved,InsertEnter * if &l:cursorline | setlocal nocursorline | endif 
+    " Fast Cursor / nocursorline in Insert Mode
+    " autocmd CursorHold * setlocal cursorline
+    " autocmd CursorMoved,InsertEnter * if &l:cursorline | setlocal nocursorline | endif 
+  
+    " ESC to not append 'g' when save in insert mode
+    autocmd BufWritePost *.py  call feedkeys("\<Esc>") | WatchdogsRun
+    autocmd BufWritePost *.css call feedkeys("\<Esc>") | WatchdogsRun
+    autocmd BufWritePost *.js  call feedkeys("\<Esc>") | WatchdogsRun
+
+    autocmd BufWritePost .vimrc,vimrc so $MYVIMRC " No more restart MacVim after editing vimrc 
+    autocmd FileType unite call s:unite_settings() 
+augroup end 
 
 " QuickFix Close or Search
 function! QSearchToggle(forced)
@@ -589,8 +615,6 @@ nnoremap <silent> <C-Down> :call <SID>MoveVToNonBlank('Down')<CR>h
 if has("gui_macvim")
   let g:transparency     = 7
   let g:transparencyCtrl = 1
-
-  " autocmd BufEnter * if &transparency == 0 && g:transparencyCtrl > 0 | let &transparency = g:transparency | endif 
   
   function! s:Toggle_transparence()
     if &transparency > 0
@@ -619,7 +643,7 @@ endif
 " set guifont=Inconsolata\ for\ Powerline:h18
 " set guifont=SF\ Mono:h14
 " set guifont=Fira\ Code\ Retina:h14
-set guifont=Courier:h15
+set guifont=Courier:h16
 " set guifont=Hack\ Regular:h14
 " set guifont=Fira\ Mono:h14
 " set guifont=M+\ 1m:h18
@@ -678,3 +702,4 @@ set iskeyword+=-                        " treat dashes as part of word
 set linespace=1                         " for correct kanji display 
 set wildmenu
 
+" End
