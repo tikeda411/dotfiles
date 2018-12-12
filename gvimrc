@@ -23,4 +23,4 @@ imap <D-w> <Esc>:CommandW<CR>
 " set guifont=Source\ Code\ Pro:h15
 "
 " set columns=180
-" set lines=65 
+" set lines=65

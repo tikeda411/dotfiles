@@ -390,6 +390,7 @@ nnoremap FF ,
 " Insert / Normal Mode
 " Ctrl + c or [ = ESC 
 inoremap jk        <ESC>l
+inoremap jj        <ESC>l
 nnoremap <silent>  <ESC><ESC> :<C-u>nohlsearch<CR>
 nnoremap <C-[>     <C-t>
 
