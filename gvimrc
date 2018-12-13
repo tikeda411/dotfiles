@@ -5,7 +5,11 @@ if has("gui_macvim")
    set macmeta
    highlight Cursor guifg=yellow guibg=brown
 end
-
+" ----------------------------------------------------------------------------
+if has("gui_macvim")
+  macmenu &Edit.Find.Find\.\.\. key=<nop>
+  map <D-f> :CommandF<CR> 
+endif
 " For Command T/W
 macmenu &File.New\ Tab key=<nop>
 macmenu &File.Close key=<nop>

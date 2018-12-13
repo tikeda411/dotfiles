@@ -231,13 +231,14 @@ NeoBundleLazy 'tacroe/unite-mark', {'autoload':{'unite_sources':'mark'}} "{
     \}
   let g:unite_source_menu_menus.mycmds.command_candidates = [
     \['LeaderF            Shortcut/Command',  ''],
-    \['  lfFunction       <Space>f / <C-Space> / <C-R>', 'exe "Leaderfx! --left function"'],
+    \['  lfFunction       <Space>f / <C-Space> / <C-R>', 'exe "Leaderfwnowrap! --left function"'],
     \['  lfProjects       <Space>p / <F5>',   'exe "Unite file_mru -input=prj\\ "'],
     \['  lfBuffers        <Space>b / <C-L>',  'exe "Leaderfx buffer"'], 
     \['  lfLeaderf        <Space>l',          'exe "Leaderfx self"'],
     \['Direct Command           ',            ''],
-    \['  Project Open     op',                 'exe "PyOpenProject"'],
+    \['  Project Open     :PyOpenProject / op', 'exe "PyOpenProject"'],
     \['  vimrc            :e ~/.vimrc',       'exe "e ~/.vimrc"'],
+    \['  gvimrc           :e ~/.gvimrc',      'exe "e ~/.gvimrc"'],
     \['Legacy                    ',           ''],
     \['  python def            ',             'exe "Unite line -input=def\\ "'],
     \['  Functions        <C-@>',             'exe "TagbarToggle"'],
@@ -271,11 +272,11 @@ NeoBundle 'Yggdroot/LeaderF' "{ https://github.com/Yggdroot/LeaderF
   let g:Lf_CommandMap = {
     \ '<C-J>': ['<Down>', '<C-J>'],
     \ '<C-K>': ['<Up>',   '<C-K>']}
-  nnoremap <space>f  :<C-u>Leaderfx! --left function<cr>
-  nnoremap <C-Space> :<C-u>Leaderfx! --left function<cr> 
-  inoremap <C-Space> <ESC>:<C-u>Leaderfx! --left function<cr>
-  nnoremap <C-R>     :<C-u>Leaderfx! --right function<cr> 
-  inoremap <C-R>     <ESC>:<C-u>Leaderfx! --left function<cr>
+  nnoremap <space>f  :<C-u>Leaderfwnowrap! --left function<cr>
+  nnoremap <C-Space> :<C-u>Leaderfwnowrap! --left function<cr> 
+  inoremap <C-Space> <ESC>:<C-u>Leaderfwnowrap! --left function<cr>
+  nnoremap <C-R>     :<C-u>Leaderfwnowrap! --right function<cr> 
+  inoremap <C-R>     <ESC>:<C-u>Leaderfwnowrap! --left function<cr>
   nnoremap <C-L>     :<C-u>Leaderfx buffer<cr> 
   nnoremap <space>b  :<C-u>Leaderfx buffer<cr>
   nnoremap <space>p  :<C-u>Unite file_mru -input=prj<cr><Space>
@@ -283,7 +284,9 @@ NeoBundle 'Yggdroot/LeaderF' "{ https://github.com/Yggdroot/LeaderF
   nnoremap <space>l  :<C-u>Leaderfx self<cr> 
 
   command! -nargs=* -bang -complete=customlist,leaderf#Any#parseArguments Leaderfx call leaderf#Any#start(<bang>0, <q-args>)
-    \  | set nowrap | vertical resize 45 | call feedkeys("<Tab>")
+    \  | vertical resize 45 | call feedkeys("<Tab>")
+  command! -nargs=* -bang -complete=customlist,leaderf#Any#parseArguments Leaderfwnowrap call leaderf#Any#start(<bang>0, <q-args>)
+    \  | setlocal nowrap | vertical resize 45 | call feedkeys("<Tab>")
 "}
 
 NeoBundle 'godlygeek/csapprox'
@@ -391,6 +394,7 @@ nnoremap FF ,
 " Ctrl + c or [ = ESC 
 inoremap jk        <ESC>l
 inoremap jj        <ESC>l
+cnoremap CommandF  /
 nnoremap <silent>  <ESC><ESC> :<C-u>nohlsearch<CR>
 nnoremap <C-[>     <C-t>
 
@@ -440,7 +444,7 @@ map <SwipeDown>    <C-b>
 nnoremap bd :bdelete
 
 "nnoremap <leader>fix     :FixWhitespace<CR>
-if has("gui_macvim") 
+if has("gui_macvfim") 
   nnoremap <D-j>           :cn<cr>ztkj
   nnoremap <D-k>           :cp<cr>ztkj
 else
@@ -506,8 +510,8 @@ augroup my_autocmd
     autocmd BufEnter * lcd %:p:h " Current Directory
     " autocmd BufEnter *.pyprj let g:currProject = expand('%:p') " see pyproject.vim
     
-    " autocmd BufEnter *.py  :match defLine /def\ .*$/
-    " autocmd BufEnter *.js  :match defLine /.*function.*$/ 
+    autocmd BufEnter *.py  :match defLine /def\ .*$/ 
+    autocmd BufEnter *.js  :match defLine /.*function.*$/ 
     " autocmd BufEnter * :syntax sync fromstart
     autocmd BufNewFile,BufRead *.l set filetype=picolisp
     autocmd BufNewFile,BufRead *.arc set filetype=arc
@@ -538,6 +542,8 @@ augroup my_autocmd
 
     autocmd BufWritePost .vimrc,vimrc so $MYVIMRC " No more restart MacVim after editing vimrc 
     autocmd FileType unite call s:unite_settings() 
+
+    autocmd ColorScheme * hi LineNr ctermbg=NONE guibg=NONE
 augroup end 
 
 " QuickFix Close or Search
