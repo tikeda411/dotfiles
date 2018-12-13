@@ -7,6 +7,7 @@ if has("gui_macvim")
 end
 " ----------------------------------------------------------------------------
 if has("gui_macvim")
+  set imdisable
   macmenu &Edit.Find.Find\.\.\. key=<nop>
   map <D-f> :CommandF<CR> 
 endif

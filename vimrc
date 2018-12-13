@@ -394,9 +394,17 @@ nnoremap FF ,
 " Ctrl + c or [ = ESC 
 inoremap jk        <ESC>l
 inoremap jj        <ESC>l
+inoremap <silent> っj <ESC>
 cnoremap CommandF  /
 nnoremap <silent>  <ESC><ESC> :<C-u>nohlsearch<CR>
 nnoremap <C-[>     <C-t>
+nnoremap あ a
+nnoremap い i
+nnoremap う u
+nnoremap お o
+nnoremap っd dd
+nnoremap っy yy
+
 
 " 挿入モードでのIME状態を記憶させない場合、次行のコメントを解除
 "inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
