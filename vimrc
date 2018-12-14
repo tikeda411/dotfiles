@@ -439,6 +439,7 @@ noremap zl zb
 nnoremap  b<Space> :b<Space>
 nnoremap <Space>   <C-f>
 nnoremap <S-Space> <C-b>
+nnoremap vv        <C-v>
 noremap! ¥ \
 noremap! \ ¥
 

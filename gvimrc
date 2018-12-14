@@ -7,13 +7,13 @@ if has("gui_macvim")
 end
 " ----------------------------------------------------------------------------
 if has("gui_macvim")
-  set imdisable
   macmenu &Edit.Find.Find\.\.\. key=<nop>
   map <D-f> :CommandF<CR> 
 endif
 " For Command T/W
 macmenu &File.New\ Tab key=<nop>
 macmenu &File.Close key=<nop>
+inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
 
 nmap <D-w> :CommandW<CR>
 imap <D-w> <Esc>:CommandW<CR>
