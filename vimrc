@@ -39,6 +39,8 @@ NeoBundle 'Yggdroot/indentLine' "{
 NeoBundle 'tacroe/unite-mark'
 NeoBundle 'othree/javascript-libraries-syntax.vim' 
 
+let g:watchdogs_check_BufWritePost_enable = 1
+let g:watchdogs_check_CursorHold_enable = 1
 NeoBundle 'osyo-manga/vim-watchdogs' , {
   \ 'depends': [
   \     'Shougo/vimproc.vim',
@@ -60,7 +62,9 @@ NeoBundle 'osyo-manga/vim-watchdogs' , {
   \	"type" : "watchdogs_checker/csslint",
   \	"cmdopt" : "--ignore=order-alphabetical,box-sizing,unqualified-attributes,fallback-colors,compatible-vendor-prefixes,adjoining-classes"
   \}  
-
+  let g:quickrun_config["javascript/watchdogs_checker"] = {
+  \	"type" : "eslint"
+  \}
 
 NeoBundle 'dag/vim-fish'
 NeoBundle 'chrisbra/vim-diff-enhanced'
