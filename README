@@ -11,6 +11,7 @@ brew install cmake
 brew install python
 brew install ripgrep
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
+brew install eslint
 
 pip3 install neovim
 pip3 install pyflakes
@@ -53,7 +54,7 @@ Ctl-P General menu command
      lfBuffers        <Space>b
      lfLeaderf        <Space>l
    Direct Command           
-     Project Open     :PyOpenProject
+     Project Open     :PyOpenProject / op
      vimrc            :e ~/.vimrc
    Legacy              
      python def            
