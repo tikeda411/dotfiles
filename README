@@ -54,7 +54,7 @@ Ctl-P General menu command
      lfBuffers        <Space>b
      lfLeaderf        <Space>l
    Direct Command           
-     Project Open     :PyOpenProject
+     Project Open     :PyOpenProject / op
      vimrc            :e ~/.vimrc
    Legacy              
      python def            
