@@ -75,6 +75,7 @@ NeoBundle 'rust-lang/rust.vim'
 "   au FileType rust nmap gd <Plug>(rust-def)
 " "}
 NeoBundle 'cespare/vim-toml'
+NeoBundle 'LnL7/vim-nix'
 
 NeoBundle 'keith/swift.vim'
 NeoBundle 'tpope/vim-sleuth'
@@ -143,43 +144,71 @@ NeoBundle 'junegunn/vim-easy-align' "{
   " endif
 "}
 " NeoBundle 'tshirtman/vim-cython'
-" NeoBundle 'yegappan/mru'
 
 NeoBundleLazy 'ap/vim-css-color', {'autoload':{'filetypes':['css','scss','sass','less','styl']}}
 NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript']}}
 " NeoBundle 'jonsmithers/experimental-lit-html-vim'
 
+NeoBundle 'Shougo/deoplete.nvim' "{
+  " slow startup, https://github.com/Shougo/deoplete.nvim/issues/780
+  let g:deoplete#enable_at_startup = 0 
+  let g:python3_host_prog = '/usr/local/bin/python3'
+  augroup xdeoplete
+    autocmd!
+    autocmd InsertEnter * call deoplete#enable()
+    autocmd FileType css            setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html,markdown  setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript     setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python         setlocal omnifunc=pjedi#completions
+    autocmd FileType xml            setlocal omnifunc=xmlcomplete#CompleteTags
+
+    autocmd FileType rust          hi rustCommentLineDoc    guifg=#00b418 "Green variant
+    autocmd InsertLeave * silent! pclose!
+  augroup END
+  NeoBundle 'zchee/deoplete-jedi'
+    let g:deoplete#sources#jedi#statement_length = 350
+    let g:deoplete#sources#jedi#python_path = '/usr/local/bin/python3' 
+    let g:deoplete#sources#jedi#ignore_errors = v:true
+    " let g:deoplete#sources#jedi#show_docstring = 1
+  NeoBundle 'davidhalter/jedi-vim'
+    " Disable Jedi-vim autocompletion and enable call-signatures options
+    let g:jedi#force_py_version = 3
+    let g:pymode_rope = 0
+    let g:jedi#goto_command = 'gd'
+    let g:jedi#usages_command = 'gr'
+    let g:jedi#auto_initialization = 1
+    let g:jedi#completions_enabled = 0
+    let g:jedi#auto_vim_configuration = 0
+    let g:jedi#smart_auto_mappings = 0
+    let g:jedi#popup_on_dot = 0
+    let g:jedi#completions_command = ""
+    let g:jedi#show_call_signatures = "1"
+  NeoBundle 'Shougo/echodoc.vim'
+    let g:echodoc#enable_at_startup = 1
+"}
+
+" NeoBundle 'Valloric/YouCompleteMe', {
+"     \ 'build' : {
+"     \     'mac':     'python3 install.py',
+"     \   },
+"     \ }               
+"   let g:ycm_log_level = 'error'
+"   let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
 
 
-" NeoBundle 'Shougo/deoplete.nvim' "{
-"   " slow startup, https://github.com/Shougo/deoplete.nvim/issues/780
-"   " let g:deoplete#enable_at_startup = 1 
-"   let g:python3_host_prog = '/usr/local/bin/python3'
-"   augroup omnifuncs
-"     autocmd!
-"     autocmd CursorHold * call deoplete#enable() 
-"     autocmd FileType css            setlocal omnifunc=csscomplete#CompleteCSS
-"     autocmd FileType html,markdown  setlocal omnifunc=htmlcomplete#CompleteTags
-"     autocmd FileType javascript     setlocal omnifunc=javascriptcomplete#CompleteJS
-"     autocmd FileType python         setlocal omnifunc=pythoncomplete#Complete
-"     autocmd FileType xml            setlocal omnifunc=xmlcomplete#CompleteTags
-"
-"     autocmd FileType rust          hi rustCommentLineDoc    guifg=#00b418 "Green variant
-"   augroup END
+" NeoBundle 'neoclide/coc.nvim' "{
+"     " Remap keys for gotos
+"     nmap <silent> gd <Plug>(coc-definition)
+"     nmap <silent> gy <Plug>(coc-type-definition)
+"     nmap <silent> gi <Plug>(coc-implementation)
+"     nmap <silent> gr <Plug>(coc-references)
+"     augroup xcoc
+"         autocmd!
+"         autocmd InsertLeave * if pumvisible() == 0 | pclose | endif 
+"     augroup END  
 " "}
 
-NeoBundle 'Valloric/YouCompleteMe', {
-    \ 'build' : {
-    \     'mac':     'python3 install.py',
-    \   },
-    \ }               
-  let g:ycm_log_level = 'error'
-  let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
-  augroup xyoucompleteme
-    autocmd!
-    autocmd InsertLeave * if pumvisible() == 0 | pclose | endif 
-  augroup END 
-  
+
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'roxma/nvim-yarp'
 NeoBundle 'roxma/vim-hug-neovim-rpc'
@@ -236,7 +265,7 @@ NeoBundleLazy 'tacroe/unite-mark', {'autoload':{'unite_sources':'mark'}} "{
   let g:unite_source_menu_menus.mycmds.command_candidates = [
     \['LeaderF            Shortcut/Command',  ''],
     \['  lfFunction       <Space>f / <C-Space> / <C-R>', 'exe "Leaderfwnowrap! --left function"'],
-    \['  lfProjects       <Space>p / <F5>',   'exe "Unite file_mru -input=prj\\ "'],
+    \['  lfProjects       <Space>p / <F5>',   'exe "Leaderfwnowrap! --top mru --input prj"'],
     \['  lfBuffers        <Space>b / <C-L>',  'exe "Leaderfx buffer"'], 
     \['  lfLeaderf        <Space>l',          'exe "Leaderfx self"'],
     \['Direct Command           ',            ''],
@@ -261,11 +290,8 @@ NeoBundleLazy 'tacroe/unite-mark', {'autoload':{'unite_sources':'mark'}} "{
   noremap op        :PyOpenProject<CR> 
 "}   
 
-NeoBundle 'Shougo/neomru.vim' "{
-  let g:neomru#file_mru_limit = 2500
-"}
-
 NeoBundle 'Yggdroot/LeaderF' "{ https://github.com/Yggdroot/LeaderF 
+  let g:Lf_MruMaxFiles = 2500
   let g:Lf_WindowPosition  = "top"
   " let g:Lf_WindowHeight = 0.30
   let g:Lf_ShowRelativePath = 0
@@ -283,14 +309,14 @@ NeoBundle 'Yggdroot/LeaderF' "{ https://github.com/Yggdroot/LeaderF
   inoremap <C-R>     <ESC>:<C-u>Leaderfwnowrap! --left function<cr>
   nnoremap <C-L>     :<C-u>Leaderfx buffer<cr> 
   nnoremap <space>b  :<C-u>Leaderfx buffer<cr>
-  nnoremap <space>p  :<C-u>Unite file_mru -input=prj<cr><Space>
-  nnoremap <F5>      :<C-u>Unite file_mru -input=prj<cr><Space>
+  nnoremap <space>p  :<C-u>Leaderfwnowrap! --top mru --input prj<cr>
+  nnoremap <F5>      :<C-u>Leaderfwnowrap! --top mru --input prj<cr>
   nnoremap <space>l  :<C-u>Leaderfx self<cr> 
 
   command! -nargs=* -bang -complete=customlist,leaderf#Any#parseArguments Leaderfx call leaderf#Any#start(<bang>0, <q-args>)
     \  | vertical resize 45 | call feedkeys("<Tab>")
   command! -nargs=* -bang -complete=customlist,leaderf#Any#parseArguments Leaderfwnowrap call leaderf#Any#start(<bang>0, <q-args>)
-    \  | setlocal nowrap | vertical resize 45 | call feedkeys("<Tab>")
+    \  | setlocal nowrap | vertical resize 45 | call feedkeys("<Tab><Space>")
 "}
 
 NeoBundle 'godlygeek/csapprox'
@@ -713,7 +739,7 @@ set redrawtime=10000
 set ttyfast
 set timeoutlen=200                      " <leader> don't work with low timeoutlen, but high slowdown next search
 " set noshowmatch
-set updatetime=700
+set updatetime=500
 set noundofile
 
 set breakindent
