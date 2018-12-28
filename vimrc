@@ -39,8 +39,6 @@ NeoBundle 'Yggdroot/indentLine' "{
 NeoBundle 'tacroe/unite-mark'
 NeoBundle 'othree/javascript-libraries-syntax.vim' 
 
-let g:watchdogs_check_BufWritePost_enable = 1
-let g:watchdogs_check_CursorHold_enable = 1
 NeoBundle 'osyo-manga/vim-watchdogs' , {
   \ 'depends': [
   \     'Shougo/vimproc.vim',
@@ -62,9 +60,7 @@ NeoBundle 'osyo-manga/vim-watchdogs' , {
   \	"type" : "watchdogs_checker/csslint",
   \	"cmdopt" : "--ignore=order-alphabetical,box-sizing,unqualified-attributes,fallback-colors,compatible-vendor-prefixes,adjoining-classes"
   \}  
-  let g:quickrun_config["javascript/watchdogs_checker"] = {
-  \	"type" : "eslint"
-  \}
+
 
 NeoBundle 'dag/vim-fish'
 NeoBundle 'chrisbra/vim-diff-enhanced'
@@ -271,7 +267,6 @@ NeoBundleLazy 'tacroe/unite-mark', {'autoload':{'unite_sources':'mark'}} "{
     \['Direct Command           ',            ''],
     \['  Project Open     :PyOpenProject / op', 'exe "PyOpenProject"'],
     \['  vimrc            :e ~/.vimrc',       'exe "e ~/.vimrc"'],
-    \['  gvimrc           :e ~/.gvimrc',      'exe "e ~/.gvimrc"'],
     \['Legacy                    ',           ''],
     \['  python def            ',             'exe "Unite line -input=def\\ "'],
     \['  Functions        <C-@>',             'exe "TagbarToggle"'],
@@ -423,18 +418,9 @@ nnoremap FF ,
 " Insert / Normal Mode
 " Ctrl + c or [ = ESC 
 inoremap jk        <ESC>l
-inoremap jj        <ESC>l
-inoremap <silent> っj <ESC>
-cnoremap CommandF  /
 nnoremap <silent>  <ESC><ESC> :<C-u>nohlsearch<CR>
 nnoremap <C-[>     <C-t>
-nnoremap あ a
-nnoremap い i
-nnoremap う u
-nnoremap お o
-nnoremap っd dd
-nnoremap っy yy
-
+nnoremap <D-f>  <ESC>:call feedkeys('/')<CR>
 
 " 挿入モードでのIME状態を記憶させない場合、次行のコメントを解除
 "inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
@@ -469,7 +455,6 @@ noremap zl zb
 nnoremap  b<Space> :b<Space>
 nnoremap <Space>   <C-f>
 nnoremap <S-Space> <C-b>
-nnoremap vv        <C-v>
 noremap! ¥ \
 noremap! \ ¥
 
@@ -483,7 +468,7 @@ map <SwipeDown>    <C-b>
 nnoremap bd :bdelete
 
 "nnoremap <leader>fix     :FixWhitespace<CR>
-if has("gui_macvfim") 
+if has("gui_macvim") 
   nnoremap <D-j>           :cn<cr>ztkj
   nnoremap <D-k>           :cp<cr>ztkj
 else

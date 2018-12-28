@@ -7,8 +7,7 @@ if has("gui_macvim")
 end
 " ----------------------------------------------------------------------------
 if has("gui_macvim")
-  macmenu &Edit.Find.Find\.\.\. key=<nop>
-  map <D-f> :CommandF<CR> 
+  macmenu Edit.Find.Find\.\.\. key=<D-g>
 endif
 " For Command T/W
 macmenu &File.New\ Tab key=<nop>
