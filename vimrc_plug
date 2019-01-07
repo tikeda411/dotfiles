@@ -30,6 +30,7 @@ Plug 'thinca/vim-quickrun'
 Plug 'osyo-manga/shabadou.vim'
 Plug 'KazuakiM/vim-qfsigns'
 Plug 'dannyob/quickfixstatus'
+
   let g:quickrun_config = {
   \    'watchdogs_checker/_' : {
   \        "runner/vimproc/updatetime" : 40,
@@ -79,6 +80,7 @@ Plug 'tomtom/tcomment_vim' "{
  inoremap <D-1> <ESC>:TComment<cr> 
 "} 
 
+" Plug 'vim-utils/vim-man'
 " Plug 'tpope/vim-fugitive'
 Plug 'akioito/vim-project-files'
 " Plug 'akioito/vim-mysql'
@@ -114,73 +116,76 @@ Plug 'junegunn/vim-easy-align' "{
   if has("mac") 
     let g:tagbar_ctags_bin   = '/usr/local/bin/ctags'
   endif
-  nnoremap <C-@>      :TagbarToggle<CR> 
+  " if has("gui_running")
+  "   nnoremap <C-Space>  :TagbarToggle<CR>
+  " else
+    nnoremap <C-@>      :TagbarToggle<CR> 
+  " endif
 "}
+" Plug 'tshirtman/vim-cython'
 
 Plug 'ap/vim-css-color', {'for': ['css','scss','sass','less','styl']}
 Plug 'pangloss/vim-javascript', {'for': ['javascript']}
+" Plug 'jonsmithers/experimental-lit-html-vim'
 
-" Plug 'Shougo/deoplete.nvim' "{
-"   " slow startup, https://github.com/Shougo/deoplete.nvim/issues/780
-"   let g:deoplete#enable_at_startup = 0 
-"   let g:python3_host_prog = '/usr/local/bin/python3'
-"   augroup xdeoplete
-"     autocmd!
-"     autocmd InsertEnter * call deoplete#enable()
-"     autocmd FileType css            setlocal omnifunc=csscomplete#CompleteCSS
-"     autocmd FileType html,markdown  setlocal omnifunc=htmlcomplete#CompleteTags
-"     autocmd FileType javascript     setlocal omnifunc=javascriptcomplete#CompleteJS
-"     autocmd FileType python         setlocal omnifunc=pjedi#completions
-"     autocmd FileType xml            setlocal omnifunc=xmlcomplete#CompleteTags
-"
-"     autocmd FileType rust          hi rustCommentLineDoc    guifg=#00b418 "Green variant
-"     autocmd InsertLeave * silent! pclose!
-"   augroup end
-"   Plug 'zchee/deoplete-jedi'
-"     let g:deoplete#sources#jedi#statement_length = 350
-"     let g:deoplete#sources#jedi#python_path = '/usr/local/bin/python3' 
-"     let g:deoplete#sources#jedi#ignore_errors = v:true
-"   Plug 'davidhalter/jedi-vim'
-"     " Disable Jedi-vim autocompletion and enable call-signatures options
-"     let g:jedi#force_py_version = 3
-"     let g:pymode_rope = 0
-"     let g:jedi#goto_command = 'gd'
-"     let g:jedi#usages_command = 'gr'
-"     let g:jedi#auto_initialization = 1
-"     let g:jedi#completions_enabled = 0
-"     let g:jedi#auto_vim_configuration = 0
-"     let g:jedi#smart_auto_mappings = 0
-"     let g:jedi#popup_on_dot = 0
-"     let g:jedi#completions_command = ""
-"     let g:jedi#show_call_signatures = "1"
-"   Plug 'Shougo/echodoc.vim'
-"     let g:echodoc#enable_at_startup = 1
+Plug 'Shougo/deoplete.nvim' "{
+  " slow startup, https://github.com/Shougo/deoplete.nvim/issues/780
+  let g:deoplete#enable_at_startup = 0 
+  let g:python3_host_prog = '/usr/local/bin/python3'
+  augroup xdeoplete
+    autocmd!
+    autocmd InsertEnter * call deoplete#enable()
+    autocmd FileType css            setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html,markdown  setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript     setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python         setlocal omnifunc=pjedi#completions
+    autocmd FileType xml            setlocal omnifunc=xmlcomplete#CompleteTags
+
+    autocmd FileType rust          hi rustCommentLineDoc    guifg=#00b418 "Green variant
+    autocmd InsertLeave * silent! pclose!
+  augroup END
+  Plug 'zchee/deoplete-jedi'
+    let g:deoplete#sources#jedi#statement_length = 350
+    let g:deoplete#sources#jedi#python_path = '/usr/local/bin/python3' 
+    let g:deoplete#sources#jedi#ignore_errors = v:true
+    " let g:deoplete#sources#jedi#show_docstring = 1
+  Plug 'davidhalter/jedi-vim'
+    " Disable Jedi-vim autocompletion and enable call-signatures options
+    let g:jedi#force_py_version = 3
+    let g:pymode_rope = 0
+    let g:jedi#goto_command = 'gd'
+    let g:jedi#usages_command = 'gr'
+    let g:jedi#auto_initialization = 1
+    let g:jedi#completions_enabled = 0
+    let g:jedi#auto_vim_configuration = 0
+    let g:jedi#smart_auto_mappings = 0
+    let g:jedi#popup_on_dot = 0
+    let g:jedi#completions_command = ""
+    let g:jedi#show_call_signatures = "1"
+  Plug 'Shougo/echodoc.vim'
+    let g:echodoc#enable_at_startup = 1
+"}
+
+" Plug 'Valloric/YouCompleteMe', {
+"     \ 'build' : {
+"     \     'mac':     'python3 install.py',
+"     \   },
+"     \ }               
+"   let g:ycm_log_level = 'error'
+"   let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
+
+
+" Plug 'neoclide/coc.nvim' "{
+"     " Remap keys for gotos
+"     nmap <silent> gd <Plug>(coc-definition)
+"     nmap <silent> gy <Plug>(coc-type-definition)
+"     nmap <silent> gi <Plug>(coc-implementation)
+"     nmap <silent> gr <Plug>(coc-references)
+"     augroup xcoc
+"         autocmd!
+"         autocmd InsertLeave * if pumvisible() == 0 | pclose | endif 
+"     augroup END  
 " "}
-
-
-" ncm2 https://github.com/ncm2
-Plug 'ncm2/ncm2'
-  Plug 'roxma/nvim-yarp'
-  Plug 'akioito/ncm2-jedi'
-  Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
-  Plug 'ncm2/ncm2-bufword'
-  Plug 'ncm2/ncm2-vim' | Plug 'Shougo/neco-vim'
-  Plug 'ncm2/ncm2-cssomni'  
-  
-  set shortmess+=c 
-  inoremap <c-c> <ESC>
-  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-  let g:ncm2#complete_delay = 100
-  let g:ncm2#popup_delay = 100
-  let g:ncm2#matcher = 'prefix'
-
-  augroup xncm2
-    autocmd BufEnter * call ncm2#enable_for_buffer()
-    autocmd User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
-    autocmd User Ncm2PopupClose set completeopt=menuone 
-    autocmd TextChangedI * call ncm2#auto_trigger()
-  augroup end   
 
 
 Plug 'rhysd/clever-f.vim'
@@ -204,9 +209,12 @@ Plug 'tacroe/unite-mark' "{
   nnoremap uf           :Unite -auto-resize buffer<CR>    
   nnoremap jf           :Unite buffer<CR>
   nnoremap fj           :Unite buffer<CR>
+  " nnoremap <C-L>        :Unite buffer<cr>
   nnoremap um           :Unite mark<CR>
   nnoremap us           :Unite source<CR>
-  nnoremap ct           :MRU prj<CR>
+  " nnoremap ct           :MRU prj<CR>
+  " nnoremap <C-p>        :MRU prj<CR>
+  " nnoremap <C-Space>    :Unite line -input=def\ <CR>
   nnoremap unu          :Unite neobundle/update
   nnoremap mm          :Unite output:map<CR>
   
@@ -230,8 +238,8 @@ Plug 'tacroe/unite-mark' "{
   
   let g:unite_source_menu_menus = get(g:,'unite_source_menu_menus',{})
   let g:unite_source_menu_menus.mycmds = {
-    \ 'description' : '          Menu Commands
-    \                            Ctrl-p',
+    \ 'description' : '            gestionar repositorios git
+        \                            ⌘ [espacio]g',
     \}
   let g:unite_source_menu_menus.mycmds.command_candidates = [
     \['LeaderF            Shortcut/Command',  ''],
@@ -261,7 +269,7 @@ Plug 'tacroe/unite-mark' "{
 "}   
 
 Plug 'yegappan/mru' " usage as :MRU prj
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' } "{ https://github.com/Yggdroot/LeaderF 
+Plug 'Yggdroot/LeaderF' "{ https://github.com/Yggdroot/LeaderF 
   let g:Lf_MruMaxFiles = 2500
   let g:Lf_WindowPosition  = "top"
   " let g:Lf_WindowHeight = 0.30
@@ -293,6 +301,12 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' } "{ https://github.com/Yggdroot
 Plug 'godlygeek/csapprox'
 Plug 'tpope/vim-sensible'                                      
 
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+" PlugCheck
+
+" NeoBundleLocal ~/.vim/mybundle
+
 Plug '~/.vim/mybundle/misc' 
 Plug '~/.vim/mybundle/tagbar'
 Plug '~/.vim/mybundle/sbd.vim'
@@ -308,6 +322,7 @@ filetype plugin indent on
 " Turn on filetype detection
 filetype on
 filetype plugin on
+
 
 " ----------------------------------------------------------------------------
 set termencoding=utf-8
@@ -441,6 +456,7 @@ map <SwipeDown>    <C-b>
 
 nnoremap bd :bdelete
 
+"nnoremap <leader>fix     :FixWhitespace<CR>
 if has("gui_macvim") 
   nnoremap <D-j>           :cn<cr>ztkj
   nnoremap <D-k>           :cp<cr>ztkj
@@ -471,6 +487,14 @@ nnoremap <S-F2>             :UniteBookmarkAdd<CR><CR>
 
 inoremap <silent> <F3>  <ESC>:GrepBuffer <C-R>=expand("<cword>")<CR><CR><C-w><C-k>
 nnoremap <silent> <F3>       :GrepBuffer <C-R>=expand("<cword>")<CR><CR><C-w><C-k>
+" nnoremap <silent> gb         :<C-u>Unite -auto-resize grep:$buffers<CR><C-R><C-W><CR><CR>
+" nnoremap <silent> grep       :<C-u>Unite -auto-resize grep:$buffers<CR><C-R><C-W><CR><CR>
+" command! -nargs=1 Xgrep 
+"   \ | execute ':Unite -auto-resize grep:$buffers -input='.<q-args>
+"   \ | execute 'normal <Del>'
+"   \ | execute 'normal <Left><Del><Left><Del><Left><Del><Left><Del><Left><Del><Left><Del><Left><Del><Left><Del><Left><Del>'
+"   \ | execute 'normal <Left><Del><Left><Del><Left><Del><Left><Del><Left><Del><Left><Del><Left><Del><Left><Del><Left><Del>'
+"   \ | execute 'redraw!'
 
 inoremap <silent> <F4>  <ESC>:call QSearchToggle(0)<CR>
 nnoremap <silent> <F4>       :call QSearchToggle(0)<CR> 
@@ -481,7 +505,7 @@ augroup filetype_mysql
   autocmd FileType mysql inoremap <buffer><silent> <C-r>  <ESC>:MySQL<CR>
   autocmd FileType mysql nnoremap <buffer><silent> <F6>        :MySQL<CR>
   autocmd FileType mysql nnoremap <buffer><silent> <C-r>       :MySQL<CR>
-augroup end
+augroup END
 
 " nmap    <F7>       :call HexHighlight()<Return>
 
@@ -554,7 +578,7 @@ augroup QSearchToggle
 augroup end
 
 " ----------------------------------------------------------------------------
-set nu
+set rnu
 function! s:ToggleNumberMode()
   if &rnu == 0
     set rnu
@@ -686,6 +710,7 @@ set lazyredraw                          " to avoid scrolling problems
 set redrawtime=10000
 set ttyfast
 set timeoutlen=200                      " <leader> don't work with low timeoutlen, but high slowdown next search
+" set noshowmatch
 set updatetime=500
 set noundofile
 

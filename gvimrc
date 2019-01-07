@@ -13,6 +13,7 @@ endif
 macmenu &File.New\ Tab key=<nop>
 macmenu &File.Close key=<nop>
 inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
+macmenu Edit.Find.Find\.\.\. key=<D-g>
 
 nmap <D-w> :CommandW<CR>
 imap <D-w> <Esc>:CommandW<CR>
