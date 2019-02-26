@@ -54,7 +54,7 @@ Plug 'rust-lang/rust.vim'
 " "}
 Plug 'cespare/vim-toml'
 Plug 'LnL7/vim-nix'
-
+Plug 'rizzatti/dash.vim'
 Plug 'keith/swift.vim'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-markdown'
@@ -208,8 +208,9 @@ Plug 'tacroe/unite-mark' "{
   nnoremap us           :Unite source<CR>
   nnoremap ct           :MRU prj<CR>
   nnoremap unu          :Unite neobundle/update
-  nnoremap mm          :Unite output:map<CR>
-  
+  nnoremap mm           :Unite output:map<CR>
+  nnoremap ps           :PlugStatus
+
   " Custom mappings for the unite buffer
   
   function! s:unite_settings()
@@ -248,6 +249,7 @@ Plug 'tacroe/unite-mark' "{
     \['  Projects         ct',                'normal ct'], 
     \['  Buffers          fj/<C-l>',          'exe "Unite buffer"'],
     \['  Update plugins   unu',               'exe "PlugUpdate"'],
+    \['  plugin Status    ps',                'exe "PlugStatus"'],
     \['  messages         :messages',         'exe "messages"'],
     \['  keyboard map     mm',                'normal mm'],
     \['  bookmars         <F2>',              'exe "Unite bookmark"'],
