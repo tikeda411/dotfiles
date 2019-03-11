@@ -47,6 +47,7 @@ Plug 'dannyob/quickfixstatus'
 Plug 'dag/vim-fish'
 Plug 'chrisbra/vim-diff-enhanced'
 Plug 'rust-lang/rust.vim'
+Plug 'ziglang/zig.vim'
 
 " Plug 'racer-rust/vim-racer' "{
 "   let g:racer_cmd = "$HOME/.cargo/bin/racer"
@@ -161,11 +162,15 @@ Plug 'pangloss/vim-javascript', {'for': ['javascript']}
 " ncm2 https://github.com/ncm2
 Plug 'ncm2/ncm2'
   Plug 'roxma/nvim-yarp'
-  Plug 'akioito/ncm2-jedi'
+  " Plug 'akioito/ncm2-jedi' " Caution: Error when editing python2 file with # -*- coding: future_fstrings -*-
+  Plug 'rizzatti/dash.vim'
   Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
   Plug 'ncm2/ncm2-bufword'
   Plug 'ncm2/ncm2-vim' | Plug 'Shougo/neco-vim'
   Plug 'ncm2/ncm2-cssomni'  
+  Plug 'ncm2/ncm2-ultisnips'
+  Plug 'SirVer/ultisnips'
+  Plug 'honza/vim-snippets'
   
   set shortmess+=c 
   inoremap <c-c> <ESC>
@@ -271,6 +276,7 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' } "{ https://github.com/Yggdroot
   let g:Lf_CtagsFuncOpts = {
     \ 'c': '--c-kinds=fp',
     \ 'rust': '',
+    \ 'zig': '--options=$HOME/.ctags-d/zig.ctags',
     \ }
   let g:Lf_CommandMap = {
     \ '<C-J>': ['<Down>', '<C-J>'],
@@ -381,6 +387,7 @@ set statusline+=%5*%y%*                            " file type
 " ----------------------------------------------------------------------------
 " Abbrevs
 iabbrev xrm # testIto remove after test...
+iabbrev println println!
 
 " ----------------------------------------------------------------------------
 " Maps
