@@ -189,7 +189,6 @@ Plug 'ncm2/ncm2'
 
 
 Plug 'rhysd/clever-f.vim'
-Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 
 Plug 'AndrewRadev/splitjoin.vim'
